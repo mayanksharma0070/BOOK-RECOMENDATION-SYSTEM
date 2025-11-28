@@ -1,46 +1,61 @@
-<h1>Book Recommendation System (Python)</h1>
+<h1>1. Project Overview</h1>
 
-<h2>1. Project Overview</h2>
+This project is a menu-driven Book Recommendation System developed in Python.
+It allows users to explore books across several genres, view complete genre lists, search for titles, manage a wishlist, and retrieve recently viewed books.
+The system is built using core Python programming fundamentals, including dictionaries, lists, sets, loops, user input handling, and functions.
+The application runs in a terminal/command-line environment and does not require external libraries.
 
-This project is a command-line based Book Recommendation System developed in Python. It enables users to explore books categorized across multiple genres. Each genre includes a curated list of books along with their respective authors. The system uses a menu-driven structure that supports easy navigation, clear interaction, and clean output formatting.
+<h1>2. Features</h1>
 
-<h2>2. Features</h2>
+<h3>The system includes the following functionalities:</h3>
 
-* Menu-driven command-line interface.
-* Multiple genres including fiction, non-fiction, fantasy, thriller, biography, poetry, philosophy, and more.
-* Each genre contains four to five books with author names.
-* Option to view all books across all genres.
-* User input validation to ensure stable program execution.
-* Structured and modular code design for readability and future expansion.
+* Core Functionalities
+* Display all available genres.
+* Display all books across all genres with author names.
+* Recommend books by genre (selected from a menu).
+* Search for books by title.
+* Add new books to any genre.
+* View recently viewed books (maintains a stack of last five entries).
+* Add books to a wishlist.
+* View wishlist (stored using a Python set to avoid duplicates).
 
-<h2>3. Technologies Used</h2>
+<h3>Program Characteristics</h3>
 
-Python 3.x
+* Fully menu-driven interface for user-friendly navigation.
+* Input validation to avoid program crashes due to invalid entries.
+* Modular structure with separate functions for each feature.
+* Uses built-in Python data structures: dictionary (for database), list (for stack), set (for wishlist).
+* Designed for academic learning, demonstrating multiple Python concepts within one project.
 
-Standard Python library only (no external dependencies)
+<h1>3. Technologies Used</h1>
 
-<h2>4. Project Structure</h2>
-BOOK-RECOMENDATION-SYSTEM/
-│── book_recommendation_system.py     # Main program file
-│── README.md                         # Project documentation
+* Python 3.x
+* Only standard Python libraries (no external dependencies)
 
-<h2>5. How to Run the Program</h2>
-Step 1: Download or Clone the Repository
+<h1>4. Project Structure</h1>
+BOOK-RECOMMENDATION-SYSTEM/
 
-Using Git:https://github.com/mayanksharma0070/BOOK-RECOMENDATION-SYSTEM/blob/main/book_recommendation_system.py
+│── book_recommendation_system.py         # Main application script
+<br>
+│── README.md                             # Project documentation
 
-Or download the repository as a ZIP file and extract it.
+<h1>5. How to Run the Program</h1>
+Step 1: Clone or Download the Repository
+
+Clone via Git:
+
+git clone https://github.com/mayanksharma0070/BOOK-RECOMMENDATION-SYSTEM.git
+
+
+Or download the ZIP file and extract it.
 
 Step 2: Open a Terminal or Command Prompt
 
 Navigate to the project directory:
 
-cd BOOK-RECOMENDATION-SYSTEM
+cd BOOK-RECOMMENDATION-SYSTEM
 
-Step 3: Execute the Python Script
-
-Use the following command:
-
+Step 3: Run the Python Script
 python book_recommendation_system.py
 
 
@@ -48,28 +63,59 @@ or
 
 python3 book_recommendation_system.py
 
-<h2>6. Implementation Approach</h2>
+<h1>6. Implementation Approach</h1>
 
-The program uses a nested dictionary structure where each genre is mapped to a list of books represented as dictionaries containing the book title and author.
-The code follows a modular programming approach, with dedicated functions for displaying genres, showing recommendations, listing all books, and handling the main menu.
-Input validation ensures incorrect user choices do not affect program stability.
-The structure was designed with scalability in mind, allowing additional genres, books, or new features to be integrated easily.
+This project is developed using fundamental, non-OOP Python concepts.
+The major implementation decisions include:
 
-<h2>7. Key Learnings</h2>
+<h3>Data Representation</h3>
 
-Effective use of Python data structures such as dictionaries and lists for managing structured information.
-Application of functional decomposition to create modular, reusable, and readable code.
-Understanding of menu-driven application design and user interaction handling.
-Development of input validation and error-checking mechanisms.
-Experience in creating clear and organized project documentation.
+* A dictionary of lists is used as the primary book database, where:
 
-<h2>8. Future Enhancements</h2>
-Integration of a graphical user interface (GUI).
-Implementation of advanced recommendation algorithms based on user preferences.
-Storage of book data in external files (JSON, CSV) or a database system.
-Addition of search functionality for book titles and authors.
-Support for downloading or updating book data from external sources.
+  * Each key represents a genre,
+  * Each value is a list of dictionaries, each containing title and author.
 
-<h2>9. License</h2>
+ <h3>Functional Design</h3>
 
-This project is open-source and intended for educational and academic use.
+  * Every operation (search, display, adding books, genre selection, wishlist management) is implemented as a separate function.
+  * The structure promotes readability, maintainability, and logical separation.
+
+<h3> Control Flow</h3>
+
+  * A continuous while loop forms the core of the menu system.
+  * User choices are validated to prevent incorrect or unexpected input.
+  * Recently viewed books use a stack mechanism, keeping only the last five entries.
+  * Wishlist uses a set to avoid duplicate entries.
+
+  <h3>Scalability</h3>
+
+  * New genres or books can be added easily.
+  * Additional features can be integrated without restructuring the program.
+
+<h1>7. Key Learnings</h1>
+
+This project demonstrates several core Python programming concepts:
+
+* Use of dictionaries, lists, sets, and nested structures.
+* Menu-driven application design.
+* Functional decomposition and modular programming.
+* Handling user inputs and implementing validation.
+* Managing data through stacks and sets.
+* Clean terminal output formatting.
+* Structuring a Python project for academic presentation.
+
+<h1>8. Future Enhancements</h1>
+
+The system can be extended with more advanced features, such as:
+
+* Graphical User Interface (Tkinter or PyQt)
+* Search filter by author
+* Sorting books alphabetically or by publication year
+* Personalized recommendation algorithm
+* Exporting wishlist or history to a file (CSV/JSON)
+* Importing book data from external sources
+
+<h1>9. License</h1>
+
+This project is intended for educational and academic use.
+You are free to modify, enhance, and integrate it into learning assignments or demonstrations.
