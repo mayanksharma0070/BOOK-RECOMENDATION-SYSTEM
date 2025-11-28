@@ -1,186 +1,301 @@
-# ---------------------------------------------------
-# BOOK RECOMMENDATION SYSTEM (FULL MENU - FINAL)
-# ---------------------------------------------------
+# -------------------------------------------------------
+# BOOK RECOMMENDATION SYSTEM (Full Upgrade - No Files)
+# -------------------------------------------------------
 
-books = {
+# Initial Book Database (Dictionary of genres -> list of dictionaries)
+books_db = {
     "Fiction": [
-        ("To Kill a Mockingbird", "Harper Lee"),
-        ("The Great Gatsby", "F. Scott Fitzgerald"),
-        ("1984", "George Orwell"),
-        ("Pride and Prejudice", "Jane Austen")
+        {"title": "1984", "author": "George Orwell"},
+        {"title": "To Kill a Mockingbird", "author": "Harper Lee"},
+        {"title": "The Great Gatsby", "author": "F. Scott Fitzgerald"},
     ],
     "Non-Fiction": [
-        ("Sapiens", "Yuval Noah Harari"),
-        ("Educated", "Tara Westover"),
-        ("Atomic Habits", "James Clear"),
-        ("The Power of Habit", "Charles Duhigg")
-    ],
-    "Fantasy": [
-        ("Harry Potter and the Sorcerer's Stone", "J.K. Rowling"),
-        ("The Hobbit", "J.R.R. Tolkien"),
-        ("A Game of Thrones", "George R.R. Martin"),
-        ("The Name of the Wind", "Patrick Rothfuss")
-    ],
-    "Science Fiction": [
-        ("Dune", "Frank Herbert"),
-        ("Ender's Game", "Orson Scott Card"),
-        ("The Martian", "Andy Weir"),
-        ("Neuromancer", "William Gibson")
+        {"title": "Sapiens", "author": "Yuval Noah Harari"},
+        {"title": "The Power of Habit", "author": "Charles Duhigg"},
+        {"title": "Educated", "author": "Tara Westover"},
     ],
     "Mystery": [
-        ("The Girl with the Dragon Tattoo", "Stieg Larsson"),
-        ("Gone Girl", "Gillian Flynn"),
-        ("Sherlock Holmes: The Hound of the Baskervilles", "Arthur Conan Doyle"),
-        ("The Da Vinci Code", "Dan Brown")
+        {"title": "Sherlock Holmes", "author": "Arthur Conan Doyle"},
+        {"title": "Gone Girl", "author": "Gillian Flynn"},
+        {"title": "The Girl with the Dragon Tattoo", "author": "Stieg Larsson"},
     ],
     "Thriller": [
-        ("The Silence of the Lambs", "Thomas Harris"),
-        ("The Shining", "Stephen King"),
-        ("The Girl on the Train", "Paula Hawkins"),
-        ("Misery", "Stephen King")
+        {"title": "The Da Vinci Code", "author": "Dan Brown"},
+        {"title": "Shutter Island", "author": "Dennis Lehane"},
+        {"title": "The Silence of the Lambs", "author": "Thomas Harris"},
     ],
-    "Horror": [
-        ("It", "Stephen King"),
-        ("The Haunting of Hill House", "Shirley Jackson"),
-        ("Bird Box", "Josh Malerman"),
-        ("Dracula", "Bram Stoker")
+    "Fantasy": [
+        {"title": "The Hobbit", "author": "J.R.R. Tolkien"},
+        {"title": "Harry Potter and the Sorcerer's Stone", "author": "J.K. Rowling"},
+        {"title": "The Name of the Wind", "author": "Patrick Rothfuss"},
     ],
-    "Biography": [
-        ("The Diary of a Young Girl", "Anne Frank"),
-        ("Long Walk to Freedom", "Nelson Mandela"),
-        ("Steve Jobs", "Walter Isaacson"),
-        ("Becoming", "Michelle Obama")
-    ],
-    "Self Help": [
-        ("The Subtle Art of Not Giving a F*ck", "Mark Manson"),
-        ("How to Win Friends and Influence People", "Dale Carnegie"),
-        ("Think and Grow Rich", "Napoleon Hill"),
-        ("The 7 Habits of Highly Effective People", "Stephen Covey")
-    ],
-    "Historical": [
-        ("The Book Thief", "Markus Zusak"),
-        ("The Pillars of the Earth", "Ken Follett"),
-        ("All the Light We Cannot See", "Anthony Doerr"),
-        ("Wolf Hall", "Hilary Mantel")
-    ],
-    "Adventure": [
-        ("Life of Pi", "Yann Martel"),
-        ("Treasure Island", "Robert Louis Stevenson"),
-        ("The Three Musketeers", "Alexandre Dumas"),
-        ("Into the Wild", "Jon Krakauer")
-    ],
-    "Poetry": [
-        ("Milk and Honey", "Rupi Kaur"),
-        ("The Sun and Her Flowers", "Rupi Kaur"),
-        ("Leaves of Grass", "Walt Whitman"),
-        ("The Raven and Other Poems", "Edgar Allan Poe")
+    "Science Fiction": [
+        {"title": "Dune", "author": "Frank Herbert"},
+        {"title": "Ender's Game", "author": "Orson Scott Card"},
+        {"title": "The Martian", "author": "Andy Weir"},
     ],
     "Philosophy": [
-        ("Meditations", "Marcus Aurelius"),
-        ("The Republic", "Plato"),
-        ("Thus Spoke Zarathustra", "Friedrich Nietzsche"),
-        ("Beyond Good and Evil", "Friedrich Nietzsche")
+        {"title": "The Alchemist", "author": "Paulo Coelho"},
+        {"title": "Meditations", "author": "Marcus Aurelius"},
+        {"title": "Man's Search for Meaning", "author": "Viktor Frankl"},
+    ],
+    "Horror": [
+        {"title": "It", "author": "Stephen King"},
+        {"title": "The Haunting of Hill House", "author": "Shirley Jackson"},
+        {"title": "Bird Box", "author": "Josh Malerman"},
     ],
     "Drama": [
-        ("The Merchant of Venice", "William Shakespeare"),
-        ("Hamlet", "William Shakespeare"),
-        ("A Doll's House", "Henrik Ibsen"),
-        ("Death of a Salesman", "Arthur Miller"),
-        ("The Crucible", "Arthur Miller")
+        {"title": "The Merchant of Venice", "author": "William Shakespeare"},
+        {"title": "Death of a Salesman", "author": "Arthur Miller"},
+        {"title": "A Doll's House", "author": "Henrik Ibsen"},
     ]
 }
 
+# Recently viewed stack (Last 5 books)
+recent_stack = []
 
-# ---------------------------------------------------
-# FUNCTIONS
-# ---------------------------------------------------
+# Wishlist: Set (no duplicates)
+wishlist = set()
+
+
+# -------------------- SHOW ALL GENRES --------------------
 
 def show_genres():
-    print("\nAvailable Genres:")
-    for i, genre in enumerate(books.keys(), 1):
+    print("\n--- Available Genres ---")
+    for i, genre in enumerate(books_db.keys(), 1):
         print(f"{i}. {genre}")
+    print()
 
+
+# -------------------- SHOW ALL BOOKS ---------------------
 
 def show_all_books():
-    print("\n--- ALL BOOKS AVAILABLE ---")
-    for genre, book_list in books.items():
-        print(f"\n{genre}:")
-        for title, author in book_list:
-            print(f"  - {title} by {author}")
+    print("\n--- All Books ---")
+    for genre, book_list in books_db.items():
+        print(f"\n[{genre}]")
+        for b in book_list:
+            print(f"- {b['title']} by {b['author']}")
+    print()
 
+
+# -------------------- GENRE SELECTION MENU ---------------
+
+def select_genre():
+    genre_list = list(books_db.keys())
+    print("\n--- Select Genre ---")
+    for i, g in enumerate(genre_list, 1):
+        print(f"{i}. {g}")
+
+    while True:
+        try:
+            choice = int(input("Enter your choice: "))
+            if 1 <= choice <= len(genre_list):
+                return genre_list[choice - 1]
+        except:
+            pass
+        print("Invalid choice! Try again.")
+
+
+# -------------------- RECOMMEND BOOKS --------------------
 
 def recommend_by_genre():
-    show_genres()
-    choice = int(input("\nEnter genre number: "))
+    print("\n--- Recommend Books by Genre ---")
+    genre = select_genre()
 
-    genres = list(books.keys())
-    if 1 <= choice <= len(genres):
-        selected_genre = genres[choice - 1]
-        print(f"\n--- Books in {selected_genre} ---")
-        for title, author in books[selected_genre]:
-            print(f"• {title} — {author}")
-    else:
-        print("Invalid genre number!")
+    print(f"\nRecommended books in {genre}:")
+    for b in books_db[genre]:
+        print(f"- {b['title']} by {b['author']}")
+        recent_stack.append(b)
 
+    if len(recent_stack) > 5:
+        recent_stack[:] = recent_stack[-5:]
 
-def add_book():
-    print("\n--- Add a New Book ---")
-    show_genres()
-    genre_choice = int(input("Enter genre number to add book to: "))
-
-    genres = list(books.keys())
-    if 1 <= genre_choice <= len(genres):
-        genre = genres[genre_choice - 1]
-        title = input("Enter book title: ")
-        author = input("Enter author name: ")
-        books[genre].append((title, author))
-        print(f"Book '{title}' added to genre '{genre}'.")
-    else:
-        print("Invalid genre!")
+    print()
 
 
-def search_book():
-    print("\n--- Search Book by Name ---")
-    search = input("Enter book title to search: ").lower()
+# -------------------- SEARCH BOOKS ------------------------
 
+def search_books():
+    print("\n--- Search Books by Title ---")
+    query = input("Enter book title: ").strip().lower()
     found = False
-    for genre, book_list in books.items():
-        for title, author in book_list:
-            if search in title.lower():
-                print(f"\nFound: {title} by {author}  | Genre: {genre}")
+
+    for genre, book_list in books_db.items():
+        for b in book_list:
+            if query in b["title"].lower():
+                print(f"- {b['title']} by {b['author']} ({genre})")
+                recent_stack.append(b)
                 found = True
 
     if not found:
-        print("Book not found!")
+        print("No matching books found.")
+
+    if len(recent_stack) > 5:
+        recent_stack[:] = recent_stack[-5:]
+
+    print()
 
 
-# ---------------------------------------------------
-# MAIN PROGRAM LOOP
-# ---------------------------------------------------
+# -------------------- ADD NEW BOOK ------------------------
 
-while True:
-    print("\n========== BOOK RECOMMENDATION SYSTEM ==========")
-    print("1. Recommend books by genre")
-    print("2. Show all genres")
-    print("3. Show all books")
-    print("4. Add a new book")
-    print("5. Search a book by name")
-    print("6. Exit")
+def add_book():
+    print("\n--- Add New Book ---")
+    title = input("Book Title: ").strip()
+    author = input("Author Name: ").strip()
 
-    user_choice = input("Enter your choice: ")
+    print("Select Genre for New Book:")
+    genre = select_genre()
 
-    if user_choice == "1":
-        recommend_by_genre()
-    elif user_choice == "2":
-        show_genres()
-    elif user_choice == "3":
-        show_all_books()
-    elif user_choice == "4":
-        add_book()
-    elif user_choice == "5":
-        search_book()
-    elif user_choice == "6":
-        print("Thank you for using the system!")
-        break
+    new_book = {"title": title, "author": author}
+    books_db[genre].append(new_book)
+
+    print("Book added successfully!\n")
+
+
+# -------------------- UPDATE BOOK DETAILS --------------------
+
+def update_book():
+    print("\n--- Update an Existing Book ---")
+    print("Select the genre of the book:")
+    genre = select_genre()
+
+    print(f"\nBooks in {genre}:")
+    for i, b in enumerate(books_db[genre], 1):
+        print(f"{i}. {b['title']} by {b['author']}")
+
+    try:
+        choice = int(input("Select book number to update: "))
+        selected = books_db[genre][choice - 1]
+    except:
+        print("Invalid selection.\n")
+        return
+
+    new_title = input(f"New Title (press enter to keep '{selected['title']}'): ").strip()
+    new_author = input(f"New Author (press enter to keep '{selected['author']}'): ").strip()
+
+    if new_title:
+        selected["title"] = new_title
+    if new_author:
+        selected["author"] = new_author
+
+    print("Book details updated successfully!\n")
+
+
+# -------------------- RECENTLY VIEWED ---------------------
+
+def view_recent():
+    print("\n--- Recently Viewed Books (Last 5) ---")
+    if not recent_stack:
+        print("No recent books.\n")
+        return
+
+    for b in recent_stack[-5:]:
+        print(f"- {b['title']} by {b['author']}")
+    print()
+
+
+# -------------------- WISHLIST FUNCTIONS ----------------------------
+
+def add_to_wishlist():
+    book = input("Enter book title to add to wishlist: ").strip()
+    wishlist.add(book)
+    print("Added to wishlist!\n")
+
+
+def view_wishlist():
+    print("\n--- Wishlist ---")
+    if not wishlist:
+        print("Wishlist is empty.\n")
+        return
+    for b in wishlist:
+        print("- " + b)
+    print()
+
+
+def move_from_wishlist_to_recent():
+    if not wishlist:
+        print("\nWishlist is empty.\n")
+        return
+
+    print("\n--- Move a Wishlist Book to Recent ---")
+    wishlist_list = list(wishlist)
+
+    for i, item in enumerate(wishlist_list, 1):
+        print(f"{i}. {item}")
+
+    try:
+        choice = int(input("Select the book number: "))
+        book_title = wishlist_list[choice - 1]
+    except:
+        print("Invalid choice.\n")
+        return
+
+    # Find book in database
+    found_book = None
+    for genre, blist in books_db.items():
+        for b in blist:
+            if b["title"].lower() == book_title.lower():
+                found_book = b
+                break
+
+    if found_book:
+        recent_stack.append(found_book)
+        print(f"Moved '{book_title}' to recently viewed!\n")
     else:
-        print("Invalid option. Try again.")
+        print("Book not found in database, but moved as title only.\n")
+        recent_stack.append({"title": book_title, "author": "Unknown"})
+
+    wishlist.remove(book_title)
+
+    if len(recent_stack) > 5:
+        recent_stack[:] = recent_stack[-5:]
+
+
+# -------------------- MAIN MENU ---------------------------
+
+def main():
+    while True:
+        print("\n========== BOOK RECOMMENDATION SYSTEM ==========")
+        print("1. Show All Genres")
+        print("2. Show All Books")
+        print("3. Recommend Books by Genre")
+        print("4. Search Books by Title")
+        print("5. Add New Book")
+        print("6. Update Book Details")
+        print("7. View Recently Viewed Books")
+        print("8. Add to Wishlist")
+        print("9. View Wishlist")
+        print("10. Move from Wishlist to Recently Viewed")
+        print("11. Exit")
+        print("================================================")
+
+        choice = input("Enter your choice: ")
+
+        if choice == "1":
+            show_genres()
+        elif choice == "2":
+            show_all_books()
+        elif choice == "3":
+            recommend_by_genre()
+        elif choice == "4":
+            search_books()
+        elif choice == "5":
+            add_book()
+        elif choice == "6":
+            update_book()
+        elif choice == "7":
+            view_recent()
+        elif choice == "8":
+            add_to_wishlist()
+        elif choice == "9":
+            view_wishlist()
+        elif choice == "10":
+            move_from_wishlist_to_recent()
+        elif choice == "11":
+            print("Exiting Program...")
+            break
+        else:
+            print("Invalid choice, try again.")
+
+
+main()
